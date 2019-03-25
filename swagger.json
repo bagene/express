@@ -1,0 +1,230 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "",
+      "description": "",
+      "version": "1.0"
+    },
+    "consumes": ["text/plain"],
+    "produces": ["application/json"],
+    "host": "localhost:8000",
+    "basePath": "/",
+    "paths": {
+      "/workspaces": {
+        "get": {
+            "tags": [
+                "Workspace"
+            ],
+            "description": "Get all user's workspaces",
+            "produces": [
+                "application/json"
+            ],
+            "responses": {
+                "200": {
+                    "description": "OK",
+                    "schema": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/Workspace"
+                      }
+                    }
+                }
+            }
+        },
+        "post": {
+            "tags": [
+                "Workspace"
+            ],
+            "description": "Create new backup for workspace",
+            "produces": [
+                "application/json"
+            ],
+            "parameters": [
+                {
+                    "in": "body",
+                    "name": "body",
+                    "description": "Accepted Parameters",
+                    "required": true,
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "workspace": {
+                                        "type": "string"
+                                    },
+                                    "user": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "OK",
+                    "schema": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/Workspace"
+                      }
+                    }
+                }
+            }
+        }
+      },
+      "/workspaces/backups/{user_id}": {
+        "get": {
+            "tags": [
+                "Workspace"
+            ],
+            "description": "List all backups by user",
+            "produces": [
+                "application/json"
+            ],
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "user_id",
+                    "description": "User's mongodb Object ID",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "OK",
+                    "schema": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/Backup"
+                      }
+                    }
+                }
+            }
+        }
+      }
+    },
+    
+    "definitions": {
+        "User": {
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "photo": {
+                    "type": "object",
+                    "properties": {
+                        "image_21x21": {
+                            "type": "string"
+                        },
+                        "image_27x27": {
+                            "type": "string"
+                        },
+                        "image_36x36": {
+                            "type": "string"
+                        },
+                        "image_60x60": {
+                            "type": "string"
+                        },
+                        "image_128x128": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "gid": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "Backup": {
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "date": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "workspace": {
+                    "$ref": "#/definitions/Workspace"
+                },
+                "user": {
+                    "$ref": "#/definitions/User"
+                }
+            }
+        },
+        "Workspace": {
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "gid": {
+                    "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "resource": {
+                  "type": "string"
+                },
+                "projects": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Project"
+                    }
+                },
+                "teams": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Team"
+                    }
+                }
+            }
+        },
+        "Project": {
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "gid": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "resource": {
+                    "type": "string"
+                }
+            }
+        },
+        "Team": {
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "gid": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "resource": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+ }
